@@ -6,12 +6,10 @@
 #define VECTOR_VECTOR_H
 #include <iostream>
 class ArrayException {};
-class Vector {
+template <class Type>
+class Vector{
 
-
-    // Хранилище элементов
     private:
-        int* ptr;
         // Количество элемнетов в векторе (сейчас)
         int size;
         // Максимальный размер на данный момент
@@ -20,28 +18,30 @@ class Vector {
         static const int DEFAULT_CAPACITY = 10;
         // функция увеличения capacity при достижении конца вектора
         void increaseCapacity(int newCapacity);
-    public:
 
+    public:
+        //Указатель на элементы вектора
+        Type* ptr;
         //Констркутор с указанием размера
         explicit Vector(int startCapacity=DEFAULT_CAPACITY);
         //Консруктор копирования
-        Vector(const Vector& arr);
+        Vector(const Vector<Type>& arr);
         //Деструктор
         ~Vector();
 
         //оператор присваивания =
-        Vector& operator =(const Vector& arr);
+        Vector<Type>& operator =(const Vector<Type>& arr);
         //оператор индексации []
-        int& operator [](int index);
+        Type& operator [](int index);
         // Вставка элемента
-        void insert(int elem, int index);
-        void insert(int elem);
+        void insert(Type elem, int index);
+        void insert(Type elem);
         // Удаление элемента
         void remove(int index);
         // Получение количества элементов (длины вектора)
         int getSize() const;
         // Вывод
-        friend std::ostream& operator <<(std::ostream& out, const Vector& arr);
+        //friend std::ostream& operator <<(std::ostream& out, const Vector<Type>& arr);
 
 
 

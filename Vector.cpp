@@ -4,34 +4,38 @@
 #include <iostream>
 #include "Vector.h"
 
-Vector::Vector(int startCapacity) {
+template <class Type>
+Vector<Type>::Vector(int startCapacity) {
     if (startCapacity <= 0){
         capacity = DEFAULT_CAPACITY;
     } else {
         capacity = startCapacity;
     }
-    ptr = new int[capacity];
+    ptr = new Type[capacity];
     size = 0;
 }
 
-Vector::Vector(const Vector& arr) {
-    ptr = new int [arr.capacity];
+template <class Type>
+Vector<Type>::Vector(const Vector<Type>& arr) {
+    ptr = new Type [arr.capacity];
     size = arr.size;
     capacity = arr.capacity;
     for (int i=0; i<size; i++)
         ptr[i] = arr.ptr[i];
 }
 
-Vector::~Vector() {
+template <class Type>
+Vector<Type>::~Vector() {
     delete[] ptr;
 }
 
-Vector& Vector::operator =(const Vector &arr) {
+template  <class Type>
+Vector<Type>& Vector<Type>::operator =(const Vector<Type> &arr) {
     if (this==&arr)
         return *this;
     if (capacity != arr.capacity) {
         delete[] ptr;
-        ptr = new int[arr.capacity];
+        ptr = new Type[arr.capacity];
         capacity = arr.capacity;
     }
     size = arr.size;
@@ -40,11 +44,13 @@ Vector& Vector::operator =(const Vector &arr) {
     return *this;
 }
 
-int& Vector::operator [](int index) {
-    if (index == size){
-        size++ ; //дублирует insert
+template  <class Type>
+Type& Vector<Type>::operator [](int index) {
+
         if (size == capacity)
             increaseCapacity(size+1);
+        if (index == size){
+            size++ ; //дублирует insert
     }
     if (index < 0 || index > size)
         //throw std::out_of_range("out of bound exception");
@@ -53,7 +59,8 @@ int& Vector::operator [](int index) {
         return ptr[index];
 }
 
-void Vector::insert(int elem, int index) {
+template <class Type>
+void Vector<Type>::insert(Type elem, int index) {
     if (index < 0 || index > size)
         throw ArrayException();
 
@@ -65,35 +72,44 @@ void Vector::insert(int elem, int index) {
         ptr[index] = elem;
 }
 
-void Vector::insert(int elem) {
+template<class Type>
+void Vector<Type>::insert(Type elem) {
     insert(elem, size);
 }
 
-void Vector::remove(int index) {
+template  <class Type>
+void Vector<Type>::remove(int index) {
     if (index < 0 || index >= size)
         throw ArrayException();
     for (int i=index; i < size-1; i++)
         ptr[i] = ptr[i +1];
-    ptr[size-1]=0;
+    ptr[size-1]=Type();
     size-- ;
 }
 
-int Vector::getSize() const {
+template  <class Type>
+int Vector<Type>::getSize() const {
     return size;
 }
 
-std::ostream& operator <<(std::ostream& out, const Vector& arr) {
-    for (int i =0; i < arr.getSize(); i++)
-        if (arr.getSize()-1 != i)
-            out<<arr.ptr[i]<<' ';
+template  <class Type>
+std::ostream& operator <<(std::ostream& out, const Vector<Type>& arr) {
+    out << '[';
+    for (int i = 0; i < arr.getSize(); i++)
+        if (arr.getSize() - 1 != i)
+            out << arr.ptr[i] << ' ';
         else
-            out<<arr.ptr[i];
+            out << arr.ptr[i];
+    out<<']';
+
     return out;
 }
+
 //private
-void Vector::increaseCapacity(int newCapacity) {
+template  <typename Type>
+void Vector<Type>::increaseCapacity(int newCapacity) {
     capacity = newCapacity < capacity*2 ? capacity*2 : newCapacity;
-    int* newPtr = new int[capacity];
+    Type* newPtr = new Type[capacity];
     for (int i=0; i<size; i++)
         newPtr[i] = ptr[i];
     delete[] ptr;
