@@ -76,6 +76,25 @@ template<class Type>
 void Vector<Type>::insert(Type elem) {
     insert(elem, size);
 }
+template<class Type>
+void Vector<Type>::insert(int index, const Vector<Type> &arr) {
+    if (index < 0 || index > size)
+        throw  ArrayException();
+
+    //увеличиваем размер вектора
+    if (capacity < getSize() + arr.getSize())
+        increaseCapacity(getSize() + arr.getSize() + 1);
+    int oldSize = size;
+    size += arr.getSize();
+    //линейно сдвигаем все элементы от индекса до getSize() в обратном порядке
+    //затем копируем вектор
+    //небезопасно
+
+    for (int i = 0; i < oldSize; i++)
+        ptr[size -i -1] = ptr[oldSize - 1 - i];
+    for (int i = 0; i < arr.getSize(); i++)
+        ptr[index + i] = arr.ptr[i];
+}
 
 template  <class Type>
 void Vector<Type>::remove(int index) {
@@ -115,6 +134,8 @@ void Vector<Type>::increaseCapacity(int newCapacity) {
     delete[] ptr;
     ptr = newPtr;
 }
+
+
 
 
 

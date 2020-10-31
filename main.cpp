@@ -5,13 +5,38 @@ int main() {
     setlocale(LC_ALL, "Russian");
 
     std::cout<<"Vector <Vector<int> >"<<std::endl;
-    Vector< Vector<int> > arr(4);
+    Vector<int> arr(2);
+    Vector<int> brr(2);
+    for(int i=0; i<2; i++) {
+        arr.insert(i);
+        brr.insert(i);
+    }
+    brr.insert(6);
+    std::cout<<arr<<std::endl;
+    std::cout<<brr<<std::endl;
+    arr.insert(0, brr);
+    std::cout<<arr<<std::endl;
 
+    /*
+    arr.insert(2, brr);
+    for (int i = 0; i < arr.getSize(); i++)
+        std::cout<<arr[i]<<' ';
+    std::cout<<std::endl;
+*/
+    /*
     for(int i=0; i<4; i++){
         arr.insert(Vector<int>());
         for (int j = 0; j <= i; j++)
             arr[i].insert(j);
     }
+
+    for(int i=0; i<5; i++){
+        brr.insert(Vector<int>());
+        for (int j = 0; j <= i; j++)
+            brr[i].insert(j);
+    }
+    */
+    /*
     std::cout<<arr[3]<<std::endl;
     std::cout<<arr<<std::endl;
     arr[4] =  Vector<int>();
@@ -23,7 +48,7 @@ int main() {
     for (int i = 0; i<3; i++)
         arr.remove(0);
     std::cout<<arr<<std::endl;
-
+    */
     /*
     std::cout<<"Vector <int>"<<std::endl;
     Vector<int> arr1(4);

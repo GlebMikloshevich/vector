@@ -10,6 +10,8 @@ template <class Type>
 class Vector{
 
     private:
+        //Указатель на элементы вектора
+
         // Количество элемнетов в векторе (сейчас)
         int size;
         // Максимальный размер на данный момент
@@ -18,9 +20,7 @@ class Vector{
         static const int DEFAULT_CAPACITY = 10;
         // функция увеличения capacity при достижении конца вектора
         void increaseCapacity(int newCapacity);
-
     public:
-        //Указатель на элементы вектора
         Type* ptr;
         //Констркутор с указанием размера
         explicit Vector(int startCapacity=DEFAULT_CAPACITY);
@@ -36,6 +36,7 @@ class Vector{
         // Вставка элемента
         void insert(Type elem, int index);
         void insert(Type elem);
+        void insert(int index, const Vector<Type>& arr);
         // Удаление элемента
         void remove(int index);
         // Получение количества элементов (длины вектора)
